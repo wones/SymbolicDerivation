@@ -1,7 +1,7 @@
 package deriv;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author:wones
@@ -11,21 +11,17 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) {
         Deriv deriv = new Deriv();
-        List<Object> exp = new ArrayList<>();
-        exp.add("+");
-        exp.add(Express.constant(5));
-        List<Object> e1 = new ArrayList<>();
-        e1.add("*");
-        e1.add(Express.constant(3));
-        e1.add(Express.variable("x"));
-        List<Object> e2 = new ArrayList<>();
-        e2.add("*");
-        e2.add(e1);
-        e2.add(Express.variable("x"));
+        while (true) {
+            System.out.println("输入函数表达式和变量：");
+            Scanner scanner = new Scanner(System.in);
+            String[] res = scanner.nextLine().split(" ");
+            String exp = res[0];
+            String var = res[1];
+            String result = Express.ExpressionToString(deriv.deriv(Express.genExpression(exp), var));
+            System.out.println("求导结果为：");
+            System.out.println(result);
+            System.out.println("");
+        }
 
-        exp.add(e2);
-
-        System.out.println(exp);
-        System.out.println(deriv.deriv(exp,"y"));
     }
 }

@@ -45,6 +45,15 @@ public class ConstraintImp implements Constraint{
     }
 
     @Override
+    public boolean isSub(List<Object> exp) {
+        String s = (String) exp.get(0);
+        if(s.equals("-")){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public List<Object> addend(List<Object> exp) {
 
         return (List<Object>) exp.get(1);
@@ -58,7 +67,53 @@ public class ConstraintImp implements Constraint{
     @Override
     public List<Object> makeSum(List<Object> a1, List<Object> a2) {
         List<Object> res = new ArrayList<>();
+        if(a1.get(0).equals("c") && a2.get(0).equals("c")){
+            if(a1.get(0).equals("c")){
+                if((int) ((List)a1.get(1)).get(0) == 0){
+                    res.add(a2);
+                    return res;
+                }
+            }
+            if(a2.get(0).equals("c")){
+                if((int) ((List)a2.get(1)).get(0) == 0){
+                    res.add(a1);
+                    return res;
+                }
+            }
+            int sum = (int) ((List)a1.get(1)).get(0) + (int) ((List)a2.get(1)).get(0);
+            res.add(Express.constant(sum));
+            return res;
+        }
+
         String type = new String("+");
+        res.add(type);
+        res.add(a1);
+        res.add(a2);
+        return res;
+    }
+
+    @Override
+    public List<Object> makeSub(List<Object> a1, List<Object> a2) {
+        List<Object> res = new ArrayList<>();
+        if(a1.get(0).equals("c") && a2.get(0).equals("c")){
+            if(a1.get(0).equals("c")){
+                if((int) ((List)a1.get(1)).get(0) == 0){
+                    res.add(a2);
+                    return res;
+                }
+            }
+            if(a2.get(0).equals("c")){
+                if((int) ((List)a2.get(1)).get(0) == 0){
+                    res.add(a1);
+                    return res;
+                }
+            }
+            int sum = (int) ((List)a1.get(1)).get(0) - (int) ((List)a2.get(1)).get(0);
+            res.add(Express.constant(sum));
+            return res;
+        }
+
+        String type = new String("-");
         res.add(type);
         res.add(a1);
         res.add(a2);
@@ -75,6 +130,16 @@ public class ConstraintImp implements Constraint{
     }
 
     @Override
+    public boolean isDiv(List<Object> exp) {
+        String s = (String) exp.get(0);
+        if(s.equals("/")){
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
     public List<Object> multiplier(List<Object> exp) {
         return (List<Object>) exp.get(1);
     }
@@ -87,7 +152,54 @@ public class ConstraintImp implements Constraint{
     @Override
     public List<Object> makeProduct(List<Object> m1, List<Object> m2) {
         List<Object> res = new ArrayList<>();
+        if(m1.get(0).equals("c") || m2.get(0).equals("c")){
+            if(m1.get(0).equals("c") && m2.get(0).equals("c")){
+                int product = (int) ((List)m1.get(1)).get(0) * (int) ((List)m2.get(1)).get(0);
+                res.add(Express.constant(product));
+                return res;
+            } else if(m1.get(0).equals("c")){
+                if((int) ((List)m1.get(1)).get(0) == 0){
+                    res.add(Express.constant(0));
+                    return res;
+                }else if((int) ((List)m1.get(1)).get(0) == 1){
+                    res.add(m2);
+                    return res;
+                }
+            }else if(m2.get(0).equals("c")){
+                if((int) ((List)m2.get(1)).get(0) == 0){
+                    res.add(Express.constant(0));
+                    return res;
+                }else if((int) ((List)m2.get(1)).get(0) == 1){
+                    res.add(m1);
+                    return res;
+                }
+            }
+        }
+
         String type = new String("*");
+        res.add(type);
+        res.add(m1);
+        res.add(m2);
+        return res;
+    }
+
+    @Override
+    public List<Object> makeDiv(List<Object> m1, List<Object> m2) {
+        List<Object> res = new ArrayList<>();
+        if(m1.get(0).equals("c") || m2.get(0).equals("c")){
+            if(m1.get(0).equals("c") && m2.get(0).equals("c")){
+                int product = (int) ((List)m1.get(1)).get(0) / (int) ((List)m2.get(1)).get(0);
+                res.add(Express.constant(product));
+                return res;
+            } else if(m1.get(0).equals("c")){
+                if((int) ((List)m1.get(1)).get(0) == 0){
+                    res.add(Express.constant(0));
+                    return res;
+                }
+            }
+        }
+
+        String type = new String("/");
         res.add(type);
         res.add(m1);
         res.add(m2);
