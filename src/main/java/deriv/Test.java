@@ -11,17 +11,16 @@ import java.util.Scanner;
 public class Test {
     public static void main(String[] args) {
         Deriv deriv = new Deriv();
-        while (true) {
-            System.out.println("输入函数表达式和变量：");
-            Scanner scanner = new Scanner(System.in);
-            String[] res = scanner.nextLine().split(" ");
-            String exp = res[0];
-            String var = res[1];
-            String result = Express.ExpressionToString(deriv.deriv(Express.genExpression(exp), var));
-            System.out.println("求导结果为：");
-            System.out.println(result);
-            System.out.println("");
-        }
+        System.out.println("输入函数表达式和变量：");
+        Scanner scanner = new Scanner(System.in);
+        String[] res = scanner.nextLine().split(" ");
+        String exp = res[0];
+        String var = res[1];
+        String result = Express.ExpressionToString(deriv.deriv(Express.genExpression(exp), var));
+        System.out.println("求导结果为：");
+        System.out.println(result);
+        System.out.println("");
+
 
     }
 }

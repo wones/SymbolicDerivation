@@ -326,7 +326,6 @@ public class Express {
                 String op = (String) list.get(i);
                 Object a1 = stack.pop();
                 Object a2 = stack.pop();
-
                 stringBuffer.append("(");
                 stringBuffer.append(a1);
                 stringBuffer.append(op);
@@ -336,11 +335,15 @@ public class Express {
 
 
             } else {
-                stack.push(list.get(i));
+                stack.push(new StringBuffer().append(list.get(i)));
             }
         }
-        StringBuffer stringBuffer = (StringBuffer) stack.pop();
-        return stringBuffer.toString();
+        if(!stack.isEmpty()){
+            StringBuffer stringBuffer = (StringBuffer) stack.pop();
+            return stringBuffer.toString();
+        }
+        return null;
+
     }
 
 }
